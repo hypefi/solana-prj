@@ -19,6 +19,8 @@ const MenuBar: FC<MenuBarProps> = (props) => {
 				return "nfts";
 			case "/portfolio":
 				return "portfolio";
+			case "/mysol":
+				return "mysol";
 			default:
 				return "";
 		}
@@ -49,6 +51,9 @@ const MenuBar: FC<MenuBarProps> = (props) => {
 						</Menu.Item>
 						<Menu.Item key="portfolio">
 							<NavLink to="/portfolio">Portfolio</NavLink>
+						</Menu.Item>
+						<Menu.Item key="mysol">
+							<NavLink to="/mysol">My Solana</NavLink>
 						</Menu.Item>
 					</>
 				)}

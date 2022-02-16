@@ -4,6 +4,7 @@ import { LinkTo } from "web3uikit";
 import { Layout, Typography } from "antd";
 import Quickstart from "./pages/Quickstart";
 import Tokens from "./pages/Tokens";
+import Mysol from "./pages/mysol";
 import NFTs from "./pages/NFTs";
 import Portfolio from "./pages/Portfolio";
 import AppBar from "./components/AppBar";
@@ -43,6 +44,7 @@ const App: FC<AppProps> = (props) => {
 								<Route path="/tokens" element={<Tokens />} />
 								<Route path="/nfts" element={<NFTs />} />
 								<Route path="/portfolio" element={<Portfolio />} />
+								<Route path="/mysol" element={<Mysol />} />
 							</>
 						)}
 					</Routes>
