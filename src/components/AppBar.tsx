@@ -3,6 +3,7 @@ import { useMoralis } from "react-moralis";
 import { Typography } from "antd";
 import { Logo, Button, getEllipsisTxt, Modal, Blockie } from "web3uikit";
 import useSolana from "../hooks/useSolana";
+import useGetsolanabalance from "../hooks/useGetsolanabalance";
 
 const { Text } = Typography;
 
@@ -10,6 +11,11 @@ const AppBar: FC = () => {
 	const { authenticate, logout, isAuthenticated } = useMoralis();
 	const { account } = useSolana();
 	const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false);
+
+	const {
+		data,
+		loading,
+	} = useGetsolanabalance();
 
 	/**
 	 * @description
@@ -21,7 +27,15 @@ const AppBar: FC = () => {
 			await authenticate({
 				// @ts-ignore
 				type: "sol",
-				onSuccess: () => {},
+				onSuccess: async () => {
+					console.log("Connected to Solana Wallet");
+					// GET Request from solana Api 
+					// to get the balance of the connected wallet
+					//
+					console.log("Getting balance");
+					console.log("Balance: ", data);
+					console.log(account);
+				},
 			});
 		} catch (e) {
 			// eslint-disable-next-line no-console
