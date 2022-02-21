@@ -3,7 +3,10 @@ import { useMoralis } from "react-moralis";
 import { Typography } from "antd";
 import { Logo, Button, getEllipsisTxt, Modal, Blockie } from "web3uikit";
 import useSolana from "../hooks/useSolana";
-import useGetsolanabalance from "../hooks/useGetsolanabalance";
+// import useGetsolanabalance from "../hooks/useGetsolanabalance";
+
+import axios from 'axios';
+import { useEffect } from 'react';
 
 const { Text } = Typography;
 
@@ -12,10 +15,10 @@ const AppBar: FC = () => {
 	const { account } = useSolana();
 	const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false);
 
-	const {
-		data,
-		loading,
-	} = useGetsolanabalance(account);
+	// const {
+	// 	data,
+	// 	loading,
+	// } = useGetsolanabalance(account);
 
 	/**
 	 * @description
@@ -32,9 +35,9 @@ const AppBar: FC = () => {
 					// GET Request from solana Api 
 					// to get the balance of the connected wallet
 					//
-					console.log("Getting balance");
-					console.log("Balance: ", data);
-					console.log(account);
+					// console.log("Getting balance");
+					// console.log("Balance: ", data);
+					// console.log(account);
 				},
 			});
 		} catch (e) {
@@ -54,6 +57,27 @@ const AppBar: FC = () => {
 			console.error(e);
 		}
 	};
+
+
+	useEffect(() => {
+		console.log("effect");
+		const fetchData = async (account_: any) => {
+			try {
+				const url = "https://solana-gateway.moralis.io/account/devnet/" + account_ + "/balance";
+				console.log(url, account);
+				// const { data: response } = await axios.get('https://solana-gateway.moralis.io/account/devnet/HTJFiPE1BjZ5aAezu6MvfBoePCHna3LZnizkuxCBNZMp/balance/', {headers: {'accept': 'application/json', 'X-API-Key': 'tWGtcgK6Z3DL30EqKtw984SzVLNGBbl5LUdPSGaZ1W8oWJelyrni7hPV8H672IUs'}});
+				// console.log('https://solana-gateway.moralis.io/account/devnet/' + myaddress + '/balance/');
+				const { data: response } = await axios.get(url, {headers: {'accept': 'application/json', 'X-API-Key': 'tWGtcgK6Z3DL30EqKtw984SzVLNGBbl5LUdPSGaZ1W8oWJelyrni7hPV8H672IUs'}});
+				// setData(response);
+				console.log(response);
+			} catch (error) {
+				console.error(error)
+			}
+			// setLoading(false);
+		};
+
+		fetchData(account).catch(console.error);
+	}, [isAuthenticated]);
 
 	return (
 		<>
