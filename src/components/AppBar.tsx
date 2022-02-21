@@ -13,6 +13,7 @@ const { Text } = Typography;
 const AppBar: FC = () => {
 	const { authenticate, logout, isAuthenticated } = useMoralis();
 	const { account } = useSolana();
+	const [balance, setBalance] = useState(0);
 	const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false);
 
 	// const {
@@ -70,6 +71,10 @@ const AppBar: FC = () => {
 				const { data: response } = await axios.get(url, {headers: {'accept': 'application/json', 'X-API-Key': 'tWGtcgK6Z3DL30EqKtw984SzVLNGBbl5LUdPSGaZ1W8oWJelyrni7hPV8H672IUs'}});
 				// setData(response);
 				console.log(response);
+				if(response) {
+					console.log(response.solana.toString());
+					setBalance(response.solana.toString());
+				}
 			} catch (error) {
 				console.error(error)
 			}
@@ -111,6 +116,12 @@ const AppBar: FC = () => {
 				id="test-button"
 				onClick={isAuthenticated ? () => setIsUserModalOpen(true) : onConnectWallet}
 				text={isAuthenticated ? getEllipsisTxt(account) : "Connect Wallet"}
+				theme="secondary"
+				type="button"
+			/>
+			<Button
+				id="test-button"
+				text={isAuthenticated ? balance.toString() + "  SOL"  : "Connect Wallet"}
 				theme="secondary"
 				type="button"
 			/>
