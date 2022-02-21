@@ -15,7 +15,7 @@ const AppBar: FC = () => {
 	const {
 		data,
 		loading,
-	} = useGetsolanabalance();
+	} = useGetsolanabalance(account);
 
 	/**
 	 * @description
