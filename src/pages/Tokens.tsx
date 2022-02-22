@@ -1,7 +1,38 @@
 import { FC } from "react";
 import { Table, Avatar, Tag } from "web3uikit";
+import  axios  from "axios";
+import { useEffect, useState } from "react";
+import  useSolana  from "../hooks/useSolana";
+import { useMoralis } from "react-moralis";
 
 const Tokens: FC = () => {
+	const { authenticate, logout, isAuthenticated } = useMoralis();
+	const { account } = useSolana();
+
+	useEffect(() => {
+		console.log("effect");
+		const fetchData = async (account_: any) => {
+			try {
+				const url = "https://solana-gateway.moralis.io/account/devnet/" + account_ + "/tokens";
+				console.log(url, account);
+				const { data: response } = await axios.get(url, {headers: {'accept': 'application/json', 'X-API-Key': 'tWGtcgK6Z3DL30EqKtw984SzVLNGBbl5LUdPSGaZ1W8oWJelyrni7hPV8H672IUs'}});
+				// setData(response);
+				console.log(response);
+				if(response) {
+					console.log(response.solana.toString());
+				}
+			} catch (error) {
+				console.error(error)
+			}
+			// setLoading(false);
+		};
+
+		fetchData(account).catch(console.error);
+	}, [isAuthenticated]);
+
+
+
+
 	return (
 		<Table
 			columnsConfig="80px 450px 450px 450px"
