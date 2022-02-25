@@ -26,3 +26,5 @@ yarn.lock
 yarn-erro.log*
 package-lock.json
 .env
+keypair2.json
+keypair.rb
