@@ -21,17 +21,16 @@ const Tokens: FC = () => {
 	const { authenticate, logout, isAuthenticated } = useMoralis();
 	const { account } = useSolana();
 
-function createData(name: any, calories: any, fat: any, carbs: any, protein: any) {
-  return { name, calories, fat, carbs, protein };
+function createData(name: any, mint: any, amount: any) {
+  return { name, mint, amount };
 }
 
+	let numtok = 0;
 
 	const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('token1', 159, 6.0 ),
+  createData('token2', 237, 9.0 ),
+  createData('token3', 262, 16.0),
 ];
 
 	useEffect(() => {
@@ -76,14 +75,20 @@ function createData(name: any, calories: any, fat: any, carbs: any, protein: any
 					m.map((accounts: any) => {
 					// console.log(accounts.account.data)
 					let tok = accounts.account.data.parsed.info;
-
-					console.log(tok.mint)
-					console.log(tok.tokenAmount)
-
+	
+					{/* console.log(tok.mint) */}
+					{/* console.log(tok.tokenAmount) */}
+					numtok = numtok + 1;
+					let tokenid = "token" + numtok; 
+					{/* console.log(createData(tokenid, tok.mint, tok.tokenAmount.amount)) */}
+					rows.push(createData(tokenid, tok.mint, tok.tokenAmount.amount))
+					console.log(rows)
+					})
+					
+					
 					}
-
 					)
-					});
+					
 
 
 			} catch (error) {
@@ -93,7 +98,7 @@ function createData(name: any, calories: any, fat: any, carbs: any, protein: any
 		};
 
 		fetchData(account).catch(console.error);
-	}, [isAuthenticated]);
+	}, [isAuthenticated,rows]);
 
 
 
@@ -103,11 +108,9 @@ function createData(name: any, calories: any, fat: any, carbs: any, protein: any
 						<Table sx={{ minWidth: 650 }} aria-label="simple table">
 							<TableHead>
 								<TableRow>
-									<TableCell>Dessert (100g serving)</TableCell>
-									<TableCell align="right">Calories</TableCell>
-									<TableCell align="right">Fat&nbsp;(g)</TableCell>
-									<TableCell align="right">Carbs&nbsp;(g)</TableCell>
-									<TableCell align="right">Protein&nbsp;(g)</TableCell>
+									<TableCell>Tokens</TableCell>
+									<TableCell align="right">Mint</TableCell>
+									<TableCell align="right">Amount</TableCell>
 								</TableRow>
 							</TableHead>
 							<TableBody>
@@ -119,10 +122,8 @@ function createData(name: any, calories: any, fat: any, carbs: any, protein: any
 										<TableCell component="th" scope="row">
 											{row.name}
 										</TableCell>
-										<TableCell align="right">{row.calories}</TableCell>
-										<TableCell align="right">{row.fat}</TableCell>
-										<TableCell align="right">{row.carbs}</TableCell>
-										<TableCell align="right">{row.protein}</TableCell>
+										<TableCell align="right">{row.mint}</TableCell>
+										<TableCell align="right">{row.amount}</TableCell>
 									</TableRow>
 								))}
 							</TableBody>
