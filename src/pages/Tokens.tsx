@@ -14,32 +14,31 @@ import Paper from '@mui/material/Paper';
 var fetch = require('node-fetch');
 
 
-
-
-
 const Tokens: FC = () => {
 	const { authenticate, logout, isAuthenticated } = useMoralis();
 	const { account } = useSolana();
+	const [rerender, setRerender] = useState(false);
+	const [rows, updateRows] = useState<any[]>([]);
+	
 
-function createData(name: any, mint: any, amount: any) {
-  return { name, mint, amount };
-}
+	function createData(name: any, mint: any, amount: any) {
+		return { name, mint, amount };
+	}
 
 	let numtok = 0;
 
-	const rows = [
-  createData('token1', 159, 6.0 ),
-  createData('token2', 237, 9.0 ),
-  createData('token3', 262, 16.0),
-];
+	{/* let rows = []; */}
 
+  {/* createData('token1', 159, 6.0 ), */}
+  {/* createData('token2', 237, 9.0 ), */}
+  {/* createData('token3', 262, 16.0), */}
 	useEffect(() => {
-		console.log("effect");
+	{/* 	console.log("effect"); */}
 
 
-		const fetchData = async (account_: any) => {
+		let fetchData = async (account_: any) => {
 			try {
-				const url = "https://solana-gateway.moralis.io/account/devnet/" + account_ + "/tokens";
+				let url = "https://solana-gateway.moralis.io/account/devnet/" + account_ + "/tokens";
 
 					fetch('http://api.testnet.solana.com', {
 							method: 'POST',
@@ -81,10 +80,10 @@ function createData(name: any, mint: any, amount: any) {
 					numtok = numtok + 1;
 					let tokenid = "token" + numtok; 
 					{/* console.log(createData(tokenid, tok.mint, tok.tokenAmount.amount)) */}
-					rows.push(createData(tokenid, tok.mint, tok.tokenAmount.amount))
+					{/* rows.push() */}
+					updateRows([...rows, createData(tokenid, tok.mint, tok.tokenAmount.amount)]);
 					console.log(rows)
 					})
-					
 					
 					}
 					)
@@ -98,7 +97,7 @@ function createData(name: any, mint: any, amount: any) {
 		};
 
 		fetchData(account).catch(console.error);
-	}, [isAuthenticated,rows]);
+	}, [isAuthenticated]);
 
 
 
@@ -114,6 +113,7 @@ function createData(name: any, mint: any, amount: any) {
 								</TableRow>
 							</TableHead>
 							<TableBody>
+								{ console.log(rows) }
 								{rows.map((row) => (
 									<TableRow
 										key={row.name}
