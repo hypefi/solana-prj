@@ -19,22 +19,18 @@ const Tokens: FC = () => {
 	const { account } = useSolana();
 	const [rerender, setRerender] = useState(false);
 	const [rows, updateRows] = useState<any[]>([]);
-	
+
+
 
 	function createData(name: any, mint: any, amount: any) {
 		return { name, mint, amount };
 	}
 
 	let numtok = 0;
+	let currentaccount = 0;
 
-	{/* let rows = []; */}
-
-  {/* createData('token1', 159, 6.0 ), */}
-  {/* createData('token2', 237, 9.0 ), */}
-  {/* createData('token3', 262, 16.0), */}
 	useEffect(() => {
-	{/* 	console.log("effect"); */}
-
+		updateRows([]);
 
 		let fetchData = async (account_: any) => {
 			try {
@@ -72,33 +68,31 @@ const Tokens: FC = () => {
 					.then((jsonData: any) => {
 					let m = jsonData.result;
 					m.map((accounts: any) => {
-					// console.log(accounts.account.data)
+
 					let tok = accounts.account.data.parsed.info;
 	
-					{/* console.log(tok.mint) */}
-					{/* console.log(tok.tokenAmount) */}
 					numtok = numtok + 1;
 					let tokenid = "token" + numtok; 
-					{/* console.log(createData(tokenid, tok.mint, tok.tokenAmount.amount)) */}
-					{/* rows.push() */}
-					updateRows([...rows, createData(tokenid, tok.mint, tok.tokenAmount.amount)]);
-					console.log(rows)
+
+
+					
+					updateRows(rows => [...rows, createData(tokenid, tok.mint, tok.tokenAmount.amount)]);
 					})
 					
-					}
-					)
+					})
+					
 					
 
 
 			} catch (error) {
 				console.error(error)
 			}
-			// setLoading(false);
 		};
 
 		fetchData(account).catch(console.error);
-	}, [isAuthenticated]);
+	}, [isAuthenticated, account]);
 
+	console.log(rows);
 
 
 
