@@ -94,10 +94,14 @@ const Tokens: FC = () => {
 
 	console.log(rows);
 
+  console.log("auth1", isAuthenticated)
 
 
 	return (
-			<TableContainer component={Paper}>
+
+		<div>
+			<div>{isAuthenticated}</div>
+		{isAuthenticated ? <TableContainer component={Paper}>
 						<Table sx={{ minWidth: 650 }} aria-label="simple table">
 							<TableHead>
 								<TableRow>
@@ -122,7 +126,8 @@ const Tokens: FC = () => {
 								))}
 							</TableBody>
 						</Table>
-  		</TableContainer>
+  		</TableContainer> :  <TableContainer component={Paper}></TableContainer> }
+		</div>
 	);
 };
 
