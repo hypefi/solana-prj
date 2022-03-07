@@ -85,29 +85,29 @@ const AppBar: FC = () => {
 
 	return (
 		<>
-			{isAuthenticated && isUserModalOpen && (
-				<Modal
-					cancelText="Disconnect Wallet"
-					isVisible={isUserModalOpen}
-					okText="Go to Explorer"
-					onCancel={onDisconnectWallet}
-					onOk={() => {}}
-					title=""
-				>
-					<div />
-					<div
-						style={{
-							alignItems: "center",
-							display: "flex",
-							flexDirection: "column",
-							justifyContent: "center",
-						}}
-					>
-						<Blockie seed={account} size={16} />
-						<Text style={{ marginTop: "1rem" }}>{account}</Text>
-					</div>
-				</Modal>
-			)}
+			{/* {isAuthenticated && isUserModalOpen && ( */}
+			{/* 	<Modal */}
+			{/* 		cancelText="Disconnect Wallet" */}
+			{/* 		isVisible={isUserModalOpen} */}
+			{/* 		okText="Go to Explorer" */}
+			{/* 		onCancel={onDisconnectWallet} */}
+			{/* 		onOk={() => {}} */}
+			{/* 		title="" */}
+			{/* 	> */}
+			{/* 		<div /> */}
+			{/* 		<div */}
+			{/* 			style={{ */}
+			{/* 				alignItems: "center", */}
+			{/* 				display: "flex", */}
+			{/* 				flexDirection: "column", */}
+			{/* 				justifyContent: "center", */}
+			{/* 			}} */}
+			{/* 		> */}
+			{/* 			<Blockie seed={account} size={16} /> */}
+			{/* 			<Text style={{ marginTop: "1rem" }}>{account}</Text> */}
+			{/* 		</div> */}
+			{/* 	</Modal> */}
+			{/* )} */}
 			<div style={{ paddingTop: "1rem" }}>
 				<Logo color="white" theme="icon" />
 			</div>
@@ -120,10 +120,16 @@ const AppBar: FC = () => {
 			/>
 			<Button
 				id="test-button"
-				text={isAuthenticated ? balance.toString() + "  SOL"  : "Connect Wallet"}
+				text={isAuthenticated ? balance.toString() + "  SOL"  : " SOL Balance "}
 				theme="secondary"
 				type="button"
 			/>
+			{isAuthenticated ? <Button
+				id="test-button"
+				text="Disconnect"
+				theme="secondary"
+				onClick={onDisconnectWallet}
+			type="button"/> : null }
 		</>
 	);
 };
